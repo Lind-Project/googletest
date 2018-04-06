@@ -55,15 +55,15 @@
 #include <ostream>
 #include <vector>
 
-#include "gtest/internal/gtest-internal.h"
-#include "gtest/internal/gtest-string.h"
-#include "gtest/gtest-death-test.h"
-#include "gtest/gtest-message.h"
-#include "gtest/gtest-param-test.h"
-#include "gtest/gtest-printers.h"
-#include "gtest/gtest_prod.h"
-#include "gtest/gtest-test-part.h"
-#include "gtest/gtest-typed-test.h"
+#include "internal/gtest-internal.h"
+#include "internal/gtest-string.h"
+#include "gtest-death-test.h"
+#include "gtest-message.h"
+#include "gtest-param-test.h"
+#include "gtest-printers.h"
+#include "gtest_prod.h"
+#include "gtest-test-part.h"
+#include "gtest-typed-test.h"
 
 // Depending on the platform, different string classes are available.
 // On Linux, in addition to ::std::string, Google also makes use of
@@ -357,7 +357,7 @@ GTEST_API_ AssertionResult AssertionFailure(const Message& msg);
 // Includes the auto-generated header that implements a family of generic
 // predicate assertion macros. This include comes late because it relies on
 // APIs declared above.
-#include "gtest/gtest_pred_impl.h"
+#include "gtest_pred_impl.h"
 
 namespace testing {
 

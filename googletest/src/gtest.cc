@@ -394,7 +394,7 @@ GTEST_API_ GTEST_DEFINE_STATIC_MUTEX_(g_linked_ptr_mutex);
 // A copy of all command line arguments.  Set by InitGoogleTest().
 ::std::vector<std::string> g_argvs;
 
-::std::vector<std::string> GetArgvs() {
+const ::std::vector<testing::internal::string>& GetInjectableArgvs() {
 #if defined(GTEST_CUSTOM_GET_ARGVS_)
   // GTEST_CUSTOM_GET_ARGVS_() may return a container of std::string or
   // ::string. This code converts it to the appropriate type.

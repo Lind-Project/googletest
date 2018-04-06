@@ -180,15 +180,15 @@ TEST_P(DerivedTest, DoesBlah) {
 
 #endif  // 0
 
-#include "gtest/internal/gtest-port.h"
+#include "internal/gtest-port.h"
 
 #if !GTEST_OS_SYMBIAN
 # include <utility>
 #endif
 
-#include "gtest/internal/gtest-internal.h"
-#include "gtest/internal/gtest-param-util.h"
-#include "gtest/internal/gtest-param-util-generated.h"
+#include "internal/gtest-internal.h"
+#include "internal/gtest-param-util.h"
+#include "internal/gtest-param-util-generated.h"
 
 namespace testing {
 
