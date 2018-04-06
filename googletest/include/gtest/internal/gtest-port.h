@@ -1545,7 +1545,7 @@ GTEST_API_ std::vector<std::string> GetArgvs();
 
 #if GTEST_HAS_DEATH_TEST
 
-std::vector<std::string> GetInjectableArgvs();
+const ::std::vector<testing::internal::string>& GetInjectableArgvs();
 // Deprecated: pass the args vector by value instead.
 void SetInjectableArgvs(const std::vector<std::string>* new_argvs);
 void SetInjectableArgvs(const std::vector<std::string>& new_argvs);
@@ -2675,10 +2675,10 @@ bool ParseInt32(const Message& src_text, const char* str, Int32* value);
 
 // Parses a bool/Int32/string from the environment variable
 // corresponding to the given Google Test flag.
-bool BoolFromGTestEnv(const char* flag, bool default_val);
-GTEST_API_ Int32 Int32FromGTestEnv(const char* flag, Int32 default_val);
+bool BoolFromGTestEnv(const char* flag, bool default_value);
+GTEST_API_ Int32 Int32FromGTestEnv(const char* flag, Int32 default_value);
 std::string OutputFlagAlsoCheckEnvVar();
-const char* StringFromGTestEnv(const char* flag, const char* default_val);
+const char* StringFromGTestEnv(const char* flag, const char* default_value);
 
 }  // namespace internal
 }  // namespace testing

@@ -1083,7 +1083,7 @@ std::string ReadEntireFile(FILE* file) {
 #if GTEST_HAS_DEATH_TEST
 static const std::vector<std::string>* g_injected_test_argvs = NULL;  // Owned.
 
-std::vector<std::string> GetInjectableArgvs() {
+const ::std::vector<testing::internal::string>& GetInjectableArgvs() {
   if (g_injected_test_argvs != NULL) {
     return *g_injected_test_argvs;
   }
@@ -1239,7 +1239,7 @@ std::string OutputFlagAlsoCheckEnvVar(){
 
 // Reads and returns the string environment variable corresponding to
 // the given flag; if it's not set, returns default_value.
-const char* StringFromGTestEnv(const char* flag, const char* default_value) {
+std::string StringFromGTestEnv(const char* flag, const char* default_value) {
 #if defined(GTEST_GET_STRING_FROM_ENV_)
   return GTEST_GET_STRING_FROM_ENV_(flag, default_value);
 #else
