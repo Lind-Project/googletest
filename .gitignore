@@ -10,6 +10,7 @@ bazel-out
 bazel-testlogs
 *CMake*
 *.a
+*.o
 *.cmake
 *.pc
 # python
