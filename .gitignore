@@ -8,6 +8,10 @@ bazel-genfiles
 bazel-googletest
 bazel-out
 bazel-testlogs
+*CMake*
+*.a
+*.cmake
+*.pc
 # python
 *.pyc
 
