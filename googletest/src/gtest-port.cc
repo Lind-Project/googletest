@@ -134,7 +134,7 @@ size_t GetThreadCount() {
   }
   procfs_info process_info;
   const int status =
-      devctl(fd, DCMD_PROC_INFO, &process_info, sizeof(process_info), NULL);
+      devctl(fd, DCMD_PROC_INFO, &process_info, sizeof(process_info), nullptr);
   close(fd);
   if (status == EOK) {
     return static_cast<size_t>(process_info.num_threads);
@@ -148,7 +148,7 @@ size_t GetThreadCount() {
 size_t GetThreadCount() {
   struct procentry64 entry;
   pid_t pid = getpid();
-  int status = getprocs64(&entry, sizeof(entry), NULL, 0, &pid, 1);
+  int status = getprocs64(&entry, sizeof(entry), nullptr, 0, &pid, 1);
   if (status == 1) {
     return entry.pi_thcount;
   } else {
@@ -207,15 +207,15 @@ void AutoHandle::Reset(HANDLE handle) {
 bool AutoHandle::IsCloseable() const {
   // Different Windows APIs may use either of these values to represent an
   // invalid handle.
-  return handle_ != NULL && handle_ != INVALID_HANDLE_VALUE;
+  return handle_ != nullptr && handle_ != INVALID_HANDLE_VALUE;
 }
 
 Notification::Notification()
-    : event_(::CreateEvent(NULL,   // Default security attributes.
+    : event_(::CreateEvent(nullptr,   // Default security attributes.
                            TRUE,   // Do not reset automatically.
                            FALSE,  // Initially unset.
-                           NULL)) {  // Anonymous event.
-  GTEST_CHECK_(event_.Get() != NULL);
+                           nullptr)) {  // Anonymous event.
+  GTEST_CHECK_(event_.Get() != nullptr);
 }
 
 void Notification::Notify() {
@@ -244,7 +244,7 @@ Mutex::~Mutex() {
   if (type_ == kDynamic) {
     ::DeleteCriticalSection(critical_section_);
     delete critical_section_;
-    critical_section_ = NULL;
+    critical_section_ = nullptr;
   }
 }
 
@@ -322,15 +322,15 @@ class ThreadWithParamSupport : public ThreadWithParamBase {
     DWORD thread_id;
     // TODO(yukawa): Consider to use _beginthreadex instead.
     HANDLE thread_handle = ::CreateThread(
-        NULL,    // Default security.
+        nullptr,    // Default security.
         0,       // Default stack size.
         &ThreadWithParamSupport::ThreadMain,
         param,   // Parameter to ThreadMainStatic
         0x0,     // Default creation flags.
         &thread_id);  // Need a valid pointer for the call to work under Win98.
-    GTEST_CHECK_(thread_handle != NULL) << "CreateThread failed with error "
+    GTEST_CHECK_(thread_handle != nullptr) << "CreateThread failed with error "
                                         << ::GetLastError() << ".";
-    if (thread_handle == NULL) {
+    if (thread_handle == nullptr) {
       delete param;
     }
     return thread_handle;
@@ -350,7 +350,7 @@ class ThreadWithParamSupport : public ThreadWithParamBase {
   static DWORD WINAPI ThreadMain(void* ptr) {
     // Transfers ownership.
     scoped_ptr<ThreadMainParam> param(static_cast<ThreadMainParam*>(ptr));
-    if (param->thread_can_start_ != NULL)
+    if (param->thread_can_start_ != nullptr)
       param->thread_can_start_->WaitForNotification();
     param->runnable_->Run();
     return 0;
@@ -487,18 +487,18 @@ class ThreadLocalRegistryImpl {
     HANDLE thread = ::OpenThread(SYNCHRONIZE | THREAD_QUERY_INFORMATION,
                                  FALSE,
                                  thread_id);
-    GTEST_CHECK_(thread != NULL);
+    GTEST_CHECK_(thread != nullptr);
     // We need to pass a valid thread ID pointer into CreateThread for it
     // to work correctly under Win98.
     DWORD watcher_thread_id;
     HANDLE watcher_thread = ::CreateThread(
-        NULL,   // Default security.
+        nullptr,   // Default security.
         0,      // Default stack size
         &ThreadLocalRegistryImpl::WatcherThreadFunc,
         reinterpret_cast<LPVOID>(new ThreadIdAndHandle(thread_id, thread)),
         CREATE_SUSPENDED,
         &watcher_thread_id);
-    GTEST_CHECK_(watcher_thread != NULL);
+    GTEST_CHECK_(watcher_thread != nullptr);
     // Give the watcher thread the same priority as ours to avoid being
     // blocked by it.
     ::SetThreadPriority(watcher_thread,
@@ -617,7 +617,7 @@ void RE::Init(const char* regex) {
 // Returns true iff ch appears anywhere in str (excluding the
 // terminating '\0' character).
 bool IsInSet(char ch, const char* str) {
-  return ch != '\0' && strchr(str, ch) != NULL;
+  return ch != '\0' && strchr(str, ch) != nullptr;
 }
 
 // Returns true iff ch belongs to the given classification.  Unlike
@@ -671,11 +671,11 @@ static std::string FormatRegexSyntaxError(const char* regex, int index) {
 // Generates non-fatal failures and returns false if regex is invalid;
 // otherwise returns true.
 bool ValidateRegex(const char* regex) {
-  if (regex == NULL) {
+  if (regex == nullptr) {
     // TODO(wan@google.com): fix the source file location in the
     // assertion failures to match where the regex is used in user
     // code.
-    ADD_FAILURE() << "NULL is not a valid simple regular expression.";
+    ADD_FAILURE() << "nullptr is not a valid simple regular expression.";
     return false;
   }
 
@@ -797,7 +797,7 @@ bool MatchRegexAtHead(const char* regex, const char* str) {
 // exponential with respect to the regex length + the string length,
 // but usually it's must faster (often close to linear).
 bool MatchRegexAnywhere(const char* regex, const char* str) {
-  if (regex == NULL || str == NULL)
+  if (regex == nullptr || str == nullptr)
     return false;
 
   if (*regex == '^')
@@ -831,8 +831,8 @@ bool RE::PartialMatch(const char* str, const RE& re) {
 
 // Initializes an RE from its string representation.
 void RE::Init(const char* regex) {
-  pattern_ = full_pattern_ = NULL;
-  if (regex != NULL) {
+  pattern_ = full_pattern_ = nullptr;
+  if (regex != nullptr) {
     pattern_ = posix::StrDup(regex);
   }
 
@@ -870,7 +870,7 @@ const char kUnknownFile[] = "unknown file";
 // Formats a source file path and a line number as they would appear
 // in an error message from the compiler used to compile this code.
 GTEST_API_ ::std::string FormatFileLocation(const char* file, int line) {
-  const std::string file_name(file == NULL ? kUnknownFile : file);
+  const std::string file_name(file == nullptr ? kUnknownFile : file);
 
   if (line < 0) {
     return file_name + ":";
@@ -889,7 +889,7 @@ GTEST_API_ ::std::string FormatFileLocation(const char* file, int line) {
 // to the file location it produces, unlike FormatFileLocation().
 GTEST_API_ ::std::string FormatCompilerIndependentFileLocation(
     const char* file, int line) {
-  const std::string file_name(file == NULL ? kUnknownFile : file);
+  const std::string file_name(file == nullptr ? kUnknownFile : file);
 
   if (line < 0)
     return file_name;
@@ -969,7 +969,7 @@ class CapturedStream {
     const int captured_fd = mkstemp(name_template);
     filename_ = name_template;
 # endif  // GTEST_OS_WINDOWS
-    fflush(NULL);
+    fflush(nullptr);
     dup2(captured_fd, fd_);
     close(captured_fd);
   }
@@ -981,7 +981,7 @@ class CapturedStream {
   std::string GetCapturedString() {
     if (uncaptured_fd_ != -1) {
       // Restores the original stream.
-      fflush(NULL);
+      fflush(nullptr);
       dup2(uncaptured_fd_, fd_);
       close(uncaptured_fd_);
       uncaptured_fd_ = -1;
@@ -1004,13 +1004,13 @@ class CapturedStream {
 
 GTEST_DISABLE_MSC_WARNINGS_POP_()
 
-static CapturedStream* g_captured_stderr = NULL;
-static CapturedStream* g_captured_stdout = NULL;
+static CapturedStream* g_captured_stderr = nullptr;
+static CapturedStream* g_captured_stdout = nullptr;
 
 // Starts capturing an output stream (stdout/stderr).
 static void CaptureStream(int fd, const char* stream_name,
                           CapturedStream** stream) {
-  if (*stream != NULL) {
+  if (*stream != nullptr) {
     GTEST_LOG_(FATAL) << "Only one " << stream_name
                       << " capturer can exist at a time.";
   }
@@ -1022,7 +1022,7 @@ static std::string GetCapturedStream(CapturedStream** captured_stream) {
   const std::string content = (*captured_stream)->GetCapturedString();
 
   delete *captured_stream;
-  *captured_stream = NULL;
+  *captured_stream = nullptr;
 
   return content;
 }
@@ -1081,13 +1081,14 @@ std::string ReadEntireFile(FILE* file) {
 }
 
 #if GTEST_HAS_DEATH_TEST
-static const std::vector<std::string>* g_injected_test_argvs = NULL;  // Owned.
+static const std::vector<std::string>* g_injected_test_argvs = nullptr;  // Owned.
 
 const ::std::vector<testing::internal::string>& GetInjectableArgvs() {
-  if (g_injected_test_argvs != NULL) {
+  if (g_injected_test_argvs != nullptr) {
     return *g_injected_test_argvs;
   }
-  return GetArgvs();
+  static const std::vector<std::string>& argv = GetArgvs();
+  return argv;
 }
 
 void SetInjectableArgvs(const std::vector<std::string>* new_argvs) {
@@ -1109,7 +1110,7 @@ void SetInjectableArgvs(const std::vector< ::string>& new_argvs) {
 
 void ClearInjectableArgvs() {
   delete g_injected_test_argvs;
-  g_injected_test_argvs = NULL;
+  g_injected_test_argvs = nullptr;
 }
 #endif  // GTEST_HAS_DEATH_TEST
 
@@ -1142,7 +1143,7 @@ static std::string FlagToEnvVar(const char* flag) {
 // unchanged and returns false.
 bool ParseInt32(const Message& src_text, const char* str, Int32* value) {
   // Parses the environment variable as a decimal integer.
-  char* end = NULL;
+  char* end = nullptr;
   const long long_value = strtol(str, &end, 10);  // NOLINT
 
   // Has strtol() consumed all characters in the string?
@@ -1188,7 +1189,7 @@ bool BoolFromGTestEnv(const char* flag, bool default_value) {
 #else
   const std::string env_var = FlagToEnvVar(flag);
   const char* const string_value = posix::GetEnv(env_var.c_str());
-  return string_value == NULL ?
+  return string_value == nullptr ?
       default_value : strcmp(string_value, "0") != 0;
 #endif  // defined(GTEST_GET_BOOL_FROM_ENV_)
 }
@@ -1202,7 +1203,7 @@ Int32 Int32FromGTestEnv(const char* flag, Int32 default_value) {
 #else
   const std::string env_var = FlagToEnvVar(flag);
   const char* const string_value = posix::GetEnv(env_var.c_str());
-  if (string_value == NULL) {
+  if (string_value == nullptr) {
     // The environment variable is not set.
     return default_value;
   }
@@ -1231,7 +1232,7 @@ Int32 Int32FromGTestEnv(const char* flag, Int32 default_value) {
 std::string OutputFlagAlsoCheckEnvVar(){
   std::string default_value_for_output_flag = "";
   const char* xml_output_file_env = posix::GetEnv("XML_OUTPUT_FILE");
-  if (NULL != xml_output_file_env) {
+  if (nullptr != xml_output_file_env) {
     default_value_for_output_flag = std::string("xml:") + xml_output_file_env;
   }
   return default_value_for_output_flag;
@@ -1245,7 +1246,7 @@ const char* StringFromGTestEnv(const char* flag, const char* default_value) {
 #else
   const std::string env_var = FlagToEnvVar(flag);
   const char* const value = posix::GetEnv(env_var.c_str());
-  return value == NULL ? default_value : value;
+  return value == nullptr ? default_value : value;
 #endif  // defined(GTEST_GET_STRING_FROM_ENV_)
 }
 
