@@ -113,7 +113,7 @@ able to find Python (`Could NOT find PythonInterp (missing:
 PYTHON_EXECUTABLE)`), try telling it explicitly where your Python
 executable can be found:
 
-    cmake -DPYTHON_EXECUTABLE=path/to/python -Dgtest_build_tests=ON ${GTEST_DIR}
+    cmake -DPYTHON_EXECUTABLE=path/to/python2 -Dgtest_build_tests=ON ${GTEST_DIR}
 
 Next, you can build Google Test and all of its own tests.  On \*nix,
 this is usually done by 'make'.  To run the tests, do

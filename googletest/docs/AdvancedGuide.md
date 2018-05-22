@@ -2399,7 +2399,7 @@ Python script `fuse_gtest_files.py` in the `scripts/` directory (since release 1
 Assuming you have Python 2.4 or above installed on your machine, just
 go to that directory and run
 ```
-python fuse_gtest_files.py OUTPUT_DIR
+python2 fuse_gtest_files.py OUTPUT_DIR
 ```
 
 and you should see an `OUTPUT_DIR` directory being created with files

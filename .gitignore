@@ -13,7 +13,7 @@ bazel-testlogs
 *.o
 *.cmake
 *.pc
-# python
+# python2
 *.pyc
 
 # Visual Studio files

@@ -2832,7 +2832,7 @@ Python script `fuse_gmock_files.py` in the `scripts/` directory
 (starting with release 1.2.0).  Assuming you have Python 2.4 or above
 installed on your machine, just go to that directory and run
 ```
-python fuse_gmock_files.py OUTPUT_DIR
+python2 fuse_gmock_files.py OUTPUT_DIR
 ```
 
 and you should see an `OUTPUT_DIR` directory being created with files

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #
 # Copyright 2005 Google Inc. All Rights Reserved.
 #
@@ -51,7 +51,7 @@ import gtest_test_utils
 # Constants.
 
 # Checks if this platform can pass empty environment variables to child
-# processes.  We set an env variable to an empty string and invoke a python
+# processes.  We set an env variable to an empty string and invoke a python2
 # script in a subprocess to print whether the variable is STILL in
 # os.environ.  We then use 'eval' to parse the child's output so that an
 # exception is thrown if the input is anything other than 'True' nor 'False'.
@@ -65,7 +65,7 @@ if sys.executable:
 
 # Check if this platform can unset environment variables in child processes.
 # We set an env variable to a non-empty string, unset it, and invoke
-# a python script in a subprocess to print whether the variable
+# a python2 script in a subprocess to print whether the variable
 # is NO LONGER in os.environ.
 # We use 'eval' to parse the child's output so that an exception
 # is thrown if the input is neither 'True' nor 'False'.
